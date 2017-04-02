@@ -1,6 +1,6 @@
 # Playbook: Build Latest Stable Ansible RPMs
 
-## Walkthrough:
+## Pre-reqs: 
 - Find a suitable CentOS 7 server with Ansible ready.
 - Easily ssh-able, if not `ssh-copy-id root@node-00`.
 
