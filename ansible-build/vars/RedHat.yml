@@ -1,0 +1,10 @@
+---
+helper_pkgs:
+  - epel-release
+  - git 
+  - python-jinja2
+  - PyYAML
+  - asciidoc-doc
+  - python-sphinx
+  - rpm-build
+  - python2-devel

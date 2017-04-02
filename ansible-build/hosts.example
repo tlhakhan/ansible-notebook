@@ -1,0 +1,3 @@
+
+# list of servers that you want to perform ansible-build rpm
+[all]
