@@ -1,2 +1,4 @@
 *.retry
 hosts
+*.key
+*.rpm

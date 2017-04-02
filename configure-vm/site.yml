@@ -1,4 +1,5 @@
 ---
 - hosts: all
   tasks:
+    - include_vars: configuration.yml 
     - include: tasks/main.yml
