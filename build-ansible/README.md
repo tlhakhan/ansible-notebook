@@ -1,14 +1,15 @@
 # Playbook: Build Latest Stable Ansible RPMs
 
 ## Pre-reqs: 
-- Find a suitable CentOS 7 server with Ansible ready.
-- Easily ssh-able, if not `ssh-copy-id root@node-00`.
+- Find a suitable CentOS 7 for building ansible.
+- Ensure easily ssh-able, if not `ssh-copy-id root@node-00`.
 
 ## Configuration:
 - You can update the version and other parameters in `vars/common.yml` file.
 - You can create the hosts file, use `hosts.example` as a basis.
 
 ## Run:
+- From the control machine, run the playbook.
 - `ansible-playbook -i hosts ansible-build.yml`
 
 ## Output:
