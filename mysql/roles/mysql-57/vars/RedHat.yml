@@ -1,0 +1,16 @@
+---
+helper_pkgs:
+  - rsync
+  - perl-Data-Dumper-Names
+  - libselinux-python
+  - MySQL-python
+
+mysql_pkgs:
+  - mysql-community-libs-5.7.17-1.el7.x86_64.rpm
+  - mysql-community-libs-compat-5.7.17-1.el7.x86_64.rpm
+  - mysql-community-common-5.7.17-1.el7.x86_64.rpm
+  - mysql-community-client-5.7.17-1.el7.x86_64.rpm
+  - mysql-community-server-5.7.17-1.el7.x86_64.rpm
+
+mysql_service_name: mysqld
+mysql_rpm_dir: /tmp/mysql-5.7

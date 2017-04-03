@@ -1,0 +1,6 @@
+---
+- name: Deploying MySQL 5.7
+  hosts: all
+  roles:
+    - mysql-57
+    

@@ -1,0 +1,94 @@
+--- 
+- name: Ensuring CentOS distro
+  fail:
+    msg: 'This playbook requires CentOS distro.'
+  when: not ansible_os_family=='RedHat'
+
+- name: Loading CentOS variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Installing deployment dependencies
+  yum: name={{ item }} state=present
+  with_items:
+    - '{{ helper_pkgs }}'
+
+- name: Sync MySQL rpms to /tmp
+  synchronize:
+    src: rpms/ 
+    dest: "{{ mysql_rpm_dir }}"
+
+- name: Install MySQL rpms
+  yum: name={{ mysql_rpm_dir }}/{{ item }} state=installed
+  with_items: 
+    - '{{ mysql_pkgs }}'
+
+- name: Send root .my.cnf file
+  template:
+    src: .my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Removing default MySQL folders
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - /etc/my.cnf.d
+    - /etc/my.cnf
+    - /var/lib/mysql
+
+- name: Checking /var/lib/mysql
+  stat:
+    path: /var/lib/mysql
+  register: mysql_dir
+
+- name: Initalizing MySQL databases
+  shell: mysqld --user=mysql --initialize-insecure
+  when: not mysql_dir.stat.exists
+
+- name: Sending my.cnf to /var/lib/mysql/my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /var/lib/mysql/my.cnf
+    owner: mysql
+    group: mysql
+    mode: 0660
+
+- name: Symlinking /var/lib/mysql/my.cnf to /etc/my.cnf
+  file:
+    src: /var/lib/mysql/my.cnf
+    dest: /etc/my.cnf
+    owner: root
+    group: root
+    state: link
+
+- name: Starting and enabling MySQL server
+  service:
+    name: '{{ mysql_service_name }}'
+    state: started
+    enabled: yes
+
+- name: Updating all root accounts
+  mysql_user: 
+    name: root
+    password: '{{ mysql_root_password }}'
+    host: "{{ item }}"
+    login_user: root
+    login_password: ""
+  with_items:
+    - 127.0.0.1
+    - localhost
+    - ::1
+  when: not mysql_dir.stat.exists
+
+- name: Delete anonymous users
+  mysql_user: 
+    user: ""
+    state: absent
+
+- name: Delete test database
+  mysql_db: 
+    db: test
+    state: absent

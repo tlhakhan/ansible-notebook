@@ -1,0 +1,12 @@
+---
+- name: Checking /etc/selinux/config
+  stat:
+    path: /etc/selinux/config
+  register: selinux_conf
+
+- name: Disabling SELinux
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX' 
+    line: 'SELINUX=disabled'
+  when: selinux_conf.stat.exists

@@ -1,2 +1,3 @@
 ---
-
+helper_pkgs:
+    - libselinux-python
