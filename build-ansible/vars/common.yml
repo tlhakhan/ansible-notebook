@@ -1,4 +1,4 @@
 ---
-ansible_git_url: 'https://github.com/ansible/ansible.git'
-ansible_build_area: '/opt/software/ansible'
+ansible_git_url: https://github.com/ansible/ansible.git
+ansible_build_area: /opt/software/ansible
 ansible_stable_version: stable-2.3
