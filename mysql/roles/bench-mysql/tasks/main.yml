@@ -1,17 +1,18 @@
 ---
-tasks:
-- name: Create sbtest database
+- name: Installing sysbench
+  yum:
+    name: sysbench
+    state: installed
+
+- name: Creating sbtest database
   mysql_db:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
     db: sbtest
     state: present
-- name: Setup sbtest user
+
+- name: Creating sbtest user
   mysql_user:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
     user: sbtest
     host: "%"
-    password: sbtest
+    password: '' 
     priv: 'sbtest.*:ALL'
     state: present  
