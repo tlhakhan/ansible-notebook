@@ -74,7 +74,7 @@
   when: mysql_secret_file.stat.exists
  
 - name: Changing MySQL root password
-  command: '/usr/bin/mysqladmin -u root -p{{ mysql_random_password.stdout }} password {{ mysql_root_password }}'
+  command: '/usr/bin/mysqladmin -u root --password={{ mysql_random_password.stdout }} password {{ mysql_root_password }}'
   when: mysql_secret_file.stat.exists
 
 - name: Removing .mysql_secret password file

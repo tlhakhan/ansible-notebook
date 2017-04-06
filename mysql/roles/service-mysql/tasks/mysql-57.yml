@@ -73,7 +73,7 @@
     enabled: yes
 
 - name: Changing MySQL root password
-  command: '/usr/bin/mysqladmin -u root -p"" password {{ mysql_root_password }}'
+  command: '/usr/bin/mysqladmin -u root --password= password {{ mysql_root_password }}'
   when: not mysql_db_dir.stat.isdir is defined
 
 - name: Updating all MySQL root accounts
