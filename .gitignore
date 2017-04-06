@@ -3,3 +3,4 @@ hosts
 *.key
 *.rpm
 *.log
+*.tar

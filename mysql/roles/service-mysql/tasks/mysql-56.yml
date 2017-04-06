@@ -12,9 +12,9 @@
   with_items:
     - '{{ helper_pkgs }}'
 
-- name: 'Syncing MySQL {{ mysql_version }} rpms to /tmp/{{ mysql_rpm_dir }}'
+- name: 'Syncing MySQL {{ mysql_version }} rpms to {{ mysql_rpm_dir }}'
   synchronize:
-    src: rpms/ 
+    src: 'rpms/{{ mysql_version }}/' 
     dest: "{{ mysql_rpm_dir }}"
 
 - name: 'Installing MySQL {{ mysql_version }} rpms'
