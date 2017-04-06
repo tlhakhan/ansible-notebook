@@ -1,4 +1,4 @@
-# HOW-TO:  MySQL 5.6.35 and MySQL 5.7.17 Deployment
+# Playbook: MySQL Server ( 5.6.35 || 5.7.17 )
 
 This playbook can do the following:
 * Setup a dedicated volume for mysql databases.
