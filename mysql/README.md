@@ -15,6 +15,28 @@ This playbook can do the following:
 * The `service-mysql` role has an `rpms` folder.
    * Execute the `get_rpms.sh` to retrieve the rpms from MySQL repo.
 
+## Example deploy.yml
+```
+---
+- name: Deploying MySQL 5.7.17
+  hosts: mysql57
+  roles:
+    -
+        name: storage-mysql
+        mysql_disks: /dev/sdb,/dev/sdc,/dev/sdd,/dev/sde
+        mysql_lv_size: 10G
+        lv_stripe_count: 4
+        lv_stripe_size: 128
+    -
+        name: service-mysql
+        mysql_version: 5.7.17
+        mysql_root_password: root!pass
+        mysql_admin_password: admin!pass
+        mysql_nagios_password: nagios!pass
+    -
+        name: bench-mysql
+ ```
+
 ## Roles Tree
 ```
 roles/
