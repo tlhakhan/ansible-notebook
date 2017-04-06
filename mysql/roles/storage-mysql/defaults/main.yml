@@ -1,0 +1,9 @@
+---
+mysql_disks: /dev/sdc,/dev/sdd,/dev/sde
+
+# size of the volume
+mysql_lv_size: 3G
+
+# logical volume stripes
+lv_stripe_count: 3
+lv_stripe_size: 256

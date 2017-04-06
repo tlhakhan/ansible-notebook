@@ -1,0 +1,6 @@
+---
+mysql_version: 5.6.35
+
+mysql_root_password: pass!pass
+mysql_admin_password: admin!admin
+mysql_nagios_password: nagios!nagios

@@ -1,0 +1,31 @@
+---
+- name: Scanning SCSI host bus for new disks
+  shell: 'for BUS in $(find /sys/class/scsi_host/host*/ -type f -name scan); do echo - - - > $BUS; done'
+  changed_when: False
+
+- name: Creating vg_mysql volume group
+  lvg:
+    vg: vg_mysql
+    pvs: '{{ mysql_disks }}'
+    state: present
+
+- name: Creating lv_mysql logical volume
+  lvol:
+    vg: vg_mysql
+    lv: lv_mysql
+    size: '{{ mysql_lv_size }}'
+    opts: '--stripes {{ lv_stripe_count }} --stripesize {{ lv_stripe_size }}'
+    shrink: no
+
+- name: Creating XFS filesystem on logical volume
+  filesystem:
+    fstype: xfs
+    dev: /dev/vg_mysql/lv_mysql
+
+- name: Creating mount for /dev/vg_mysql/lv_mysql
+  mount:
+    path: /var/lib/mysql
+    src: /dev/vg_mysql/lv_mysql
+    fstype: xfs
+    opts: relatime
+    state: present

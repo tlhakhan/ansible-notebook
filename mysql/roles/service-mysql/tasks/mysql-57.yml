@@ -1,0 +1,4 @@
+---
+- name: 'Installing MySQL {{ mysql_version }}'
+  fail:
+    msg: Not yet implemented

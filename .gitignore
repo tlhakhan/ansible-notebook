@@ -2,3 +2,4 @@
 hosts
 *.key
 *.rpm
+*.log
