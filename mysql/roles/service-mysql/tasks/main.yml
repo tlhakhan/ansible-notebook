@@ -1,6 +1,8 @@
 ---
 - include: mysql-56.yml
+  static: no
   when: mysql_version=='5.6.35'
 
 - include: mysql-57.yml
+  static: no
   when: mysql_version=='5.7.17'
