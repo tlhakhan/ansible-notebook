@@ -2,7 +2,7 @@
 
 This playbook can do the following:
 * Setup a dedicated volume for mysql databases.
-* Deploy MysQL server, versiosn 5.6.35 or 5.7.17 (latest GA release)
+* Deploy MysQL server versions: 5.6.35 or 5.7.17 (latest GA release)
    * In the hosts file specify group `[mysql56]` or `[mysql57]` for selected hosts.
 
 ## Details
