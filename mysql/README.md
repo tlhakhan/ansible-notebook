@@ -14,3 +14,34 @@ This playbook can do the following:
 * The `service-mysql` role has a barebones my.cnf file.  It is found in the `templates` folder.
 * The `service-mysql` role has an `rpms` folder.
    * Execute the `get_rpms.sh` to retrieve the rpms from MySQL repo.
+
+## Roles Tree
+```
+roles/
+├── bench-mysql
+│   └── tasks
+│       └── main.yml
+├── service-mysql
+│   ├── defaults
+│   │   └── main.yml
+│   ├── rpms
+│   │   ├── 5.6.35
+│   │   ├── 5.7.17
+│   │   ├── get_rpms.sh
+│   │   ├── MySQL-5.6.35-1.el7.x86_64.rpm-bundle.tar
+│   │   └── mysql-5.7.17-1.el7.x86_64.rpm-bundle.tar
+│   ├── tasks
+│   │   ├── main.yml
+│   │   ├── mysql-56.yml
+│   │   └── mysql-57.yml
+│   ├── templates
+│   │   └── my.cnf.j2
+│   └── vars
+│       ├── 5.6.35.yml
+│       └── 5.7.17.yml
+└── storage-mysql
+    ├── defaults
+    │   └── main.yml
+    └── tasks
+        └── main.yml
+```
