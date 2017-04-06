@@ -51,7 +51,7 @@
 
 - name: Sending my.cnf file
   template:
-    src: my.cnf.{{ ansible_os_family }}.j2
+    src: my.cnf.j2
     dest: /var/lib/mysql/my.cnf
     owner: mysql
     group: mysql
@@ -74,7 +74,7 @@
   when: mysql_secret_file.stat.exists
  
 - name: Changing MySQL root password
-  command: /usr/bin/mysqladmin -u root -p{{ mysql_random_password.stdout }} password {{ mysql_root_password }}
+  command: '/usr/bin/mysqladmin -u root -p{{ mysql_random_password.stdout }} password {{ mysql_root_password }}'
   when: mysql_secret_file.stat.exists
 
 - name: Removing .mysql_secret password file
