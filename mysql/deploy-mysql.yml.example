@@ -1,10 +1,9 @@
 ---
-- name: Deploying MySQL 5.6.35
+- name: Deploying MySQL 5.7.17
   hosts: all
   roles:
     -
         name: storage-mysql
     -
         name: service-mysql
-        mysql_version: 5.6.35
-    
+        mysql_version: 5.7.17

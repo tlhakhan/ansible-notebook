@@ -1,6 +1,7 @@
 # server optimization
 [mysqld]
-innodb_buffer_pool_size=32m
+innodb_buffer_pool_size=128m
+bind_address=0.0.0.0
 
 # client connect options
 [mysql]

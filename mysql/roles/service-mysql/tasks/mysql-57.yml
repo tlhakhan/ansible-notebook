@@ -1,4 +1,115 @@
----
-- name: 'Installing MySQL {{ mysql_version }}'
+--- 
+- name: Ensuring CentOS distro
   fail:
-    msg: Not yet implemented
+    msg: 'This playbook requires CentOS distro.'
+  when: not ansible_os_family=='RedHat'
+
+- name: Loading CentOS variables
+  include_vars: "{{ mysql_version }}.yml"
+
+- name: Installing deployment dependencies
+  yum: name={{ item }} state=present
+  with_items:
+    - '{{ helper_pkgs }}'
+
+- name: 'Syncing MySQL {{ mysql_version }} rpms to {{ mysql_rpm_dir }}'
+  synchronize:
+    src: 'rpms/{{ mysql_version }}/' 
+    dest: "{{ mysql_rpm_dir }}"
+
+- name: 'Installing MySQL {{ mysql_version }} rpms'
+  yum: name={{ mysql_rpm_dir }}/{{ item }} state=installed
+  with_items: 
+    - '{{ mysql_pkgs }}'
+
+- name: Sending root's .my.cnf file
+  template:
+    src: .my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Changing ownership of /var/lib/mysql to mysql
+  file:
+    path: /var/lib/mysql
+    owner: mysql
+    group: mysql
+    mode: 0770
+    state: directory
+
+- name: Checking if MySQL was initialized
+  stat:
+    path: /var/lib/mysql/mysql
+  register: mysql_db_dir
+
+- name: Initializing MySQL server
+  shell: 'mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql'
+  when: not mysql_db_dir.stat.isdir is defined
+
+- name: Symlinking /var/lib/mysql/my.cnf to /etc/my.cnf
+  file:
+    src: /var/lib/mysql/my.cnf
+    owner: mysql
+    group: mysql
+    dest:  '{{ item }}'
+    state: link
+    force: yes
+  with_items:
+    - /etc/my.cnf
+
+- name: Sending my.cnf file
+  template:
+    src: my.cnf.{{ ansible_os_family }}.j2
+    dest: /var/lib/mysql/my.cnf
+    owner: mysql
+    group: mysql
+    mode: 0660
+
+- name: 'Starting and enabling MySQL {{ mysql_version }} server'
+  service:
+    name: '{{ mysql_service_name }}'
+    state: started
+    enabled: yes
+
+- name: Changing MySQL root password
+  command: /usr/bin/mysqladmin -u root -p'' password {{ mysql_root_password }}
+  when: not mysql_db_dir.stat.isdir is defined
+
+- name: Updating all MySQL root accounts
+  mysql_user: 
+    name: root
+    password: '{{ mysql_root_password }}'
+    host_all: yes
+
+- name: Creating MySQL admin account
+  mysql_user:
+    name: admin
+    host: '%'
+    password: '{{ mysql_admin_password }}'
+    priv: '*.*:ALL,GRANT'
+    state: present
+
+- name: Creating MySQL nagios account
+  mysql_user:
+    name: nagios
+    host: '%'
+    password: '{{ mysql_nagios_password }}'
+    priv: '*.*:SELECT,REPLICATION CLIENT'
+    state: present
+
+- name: Removing MySQL user root@'::1'
+  mysql_user:
+    name: root
+    host: '::1'
+    state: absent
+
+- name: Delete anonymous MySQL users
+  mysql_user: 
+    user: ""
+    state: absent
+
+- name: Delete test database
+  mysql_db: 
+    db: test
+    state: absent

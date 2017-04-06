@@ -5,7 +5,7 @@
   when: not ansible_os_family=='RedHat'
 
 - name: Loading CentOS variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ mysql_version }}.yml"
 
 - name: Installing deployment dependencies
   yum: name={{ item }} state=present

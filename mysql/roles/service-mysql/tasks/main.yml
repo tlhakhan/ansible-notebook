@@ -3,4 +3,4 @@
   when: mysql_version=='5.6.35'
 
 - include: mysql-57.yml
-  when: mysql_version=='5.7.10'
+  when: mysql_version=='5.7.17'
