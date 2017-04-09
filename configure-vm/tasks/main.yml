@@ -1,5 +1,0 @@
----
-- include: packages.yml
-- include: authorized_keys.yml
-- include: selinux.yml
-- include: reboot.yml

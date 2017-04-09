@@ -1,0 +1,12 @@
+---
+helper_pkgs:
+    - tmux
+    - libselinux-python
+
+perf_pkgs:
+    - dstat
+    - bind-utils   
+    - httpd-tools
+    - sysstat
+    - tuned
+    - hwloc-gui

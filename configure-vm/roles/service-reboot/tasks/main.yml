@@ -1,0 +1,9 @@
+---
+- name: Rebooting server
+  shell: 'sleep 5 && /sbin/shutdown -r +0'
+  async: 0
+  poll: 0
+  ignore_errors: true
+
+- name: 'Waiting for server'
+  local_action: wait_for host='{{ ansible_ssh_host }}' port=22 delay=30 timeout=300

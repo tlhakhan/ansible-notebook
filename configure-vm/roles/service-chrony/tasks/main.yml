@@ -1,0 +1,27 @@
+---
+- name: Importing OS specific variables
+  include_vars: '{{ ansible_os_family }}.yml'
+
+- name: Installing chrony NTP client
+  yum:
+    name: 'chrony'
+    state: installed
+  when: ansible_os_family=='RedHat'
+  
+- name: Sending chrony.conf file
+  template:
+    src: chrony.conf.RedHat.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 644
+  when: ansible_os_family=='RedHat'
+
+- name: Starting and enabling chrony NTP client
+  service:
+    name: '{{ chrony_service_name }}'
+    state: started
+    enabled: yes
+
+- name: Syncing system time with NTP servers
+  command: timedatectl set-ntp yes

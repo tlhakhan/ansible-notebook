@@ -1,7 +1,8 @@
 ---
-- name: Installing helper packages
+- name: Installing packages
   yum:
     name: '{{ item }}'
     state: installed
   with_items:
     - '{{ helper_pkgs }}'
+    - '{{ perf_pkgs }}'

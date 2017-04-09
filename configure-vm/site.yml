@@ -1,5 +1,9 @@
 ---
 - hosts: all
-  tasks:
-    - include_vars: configuration.yml 
-    - include: tasks/main.yml
+  roles:
+    - default-config
+    - service-ssh
+    - service-dns
+    - service-chrony
+    - service-selinux
+    - service-reboot

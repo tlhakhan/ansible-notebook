@@ -1,9 +1,8 @@
 ---
-- name: Send authorized keys to host
+- name: Sending authorized keys to host
   authorized_key:
     user: root
     state: present
     key: "{{ lookup('file', item) }}"
   with_fileglob:
     - public_keys/*
-     

@@ -1,0 +1,15 @@
+bindcmdaddress 127.0.0.1
+commandkey 1
+driftfile /var/lib/chrony/chrony.drift
+keyfile /etc/chrony.keys
+local stratum 10
+logchange 0.5
+logdir /var/log/chrony
+noclientlog
+makestep 10 3
+rtcsync
+
+# ntp servers
+{% for ntp_server in ntp_servers %}
+server {{ntp_server}} iburst
+{% endfor %}

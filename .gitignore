@@ -4,3 +4,4 @@ hosts
 *.rpm
 *.log
 *.tar
+deploy.yml

@@ -7,6 +7,6 @@
 - name: Disabling SELinux
   lineinfile:
     path: /etc/selinux/config
-    regexp: '^SELINUX' 
-    line: 'SELINUX=disabled'
+    regexp: '^SELINUX'
+    line: 'SELINUX={{selinux_state}}'
   when: selinux_conf.stat.exists

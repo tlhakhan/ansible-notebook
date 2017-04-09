@@ -1,0 +1,5 @@
+{% for dns_server in dns_servers %}
+nameserver {{ dns_server }}
+{% endfor %}
+domain {{ dns_primary_domain }}
+search {{ dns_search_domains|join(' ') }}
