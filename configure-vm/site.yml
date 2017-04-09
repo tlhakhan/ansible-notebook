@@ -6,4 +6,4 @@
     - service-dns
     - service-chrony
     - service-selinux
-    - service-reboot
+  #  - service-reboot

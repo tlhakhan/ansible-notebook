@@ -7,7 +7,7 @@
     name: 'chrony'
     state: installed
   when: ansible_os_family=='RedHat'
-  
+
 - name: Sending chrony.conf file
   template:
     src: chrony.conf.RedHat.j2
@@ -25,3 +25,4 @@
 
 - name: Syncing system time with NTP servers
   command: timedatectl set-ntp yes
+  changed_when: False
