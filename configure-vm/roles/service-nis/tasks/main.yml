@@ -1,0 +1,45 @@
+---
+- name: Load OS specific variables
+  include_vars: '{{ ansible_pkg_mgr }}.yml'
+
+- name: Installing service packages
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - '{{ pkgs }}'
+  when: ansible_pkg_mgr=='yum'
+
+- name: Setting up domain name
+  command: ypdomainname {{ nis_domain }}
+  changed_when: False
+
+- name: Updating /etc/sysconfig/network
+  lineinfile:
+    path: /etc/sysconfig/network
+    line: 'NISDOMAIN={{nis_domain}}'
+    state: present
+  when: ansible_pkg_mgr=='yum'
+
+- name: Updating authconfig to use NIS authentication
+  command: authconfig --enablenis --nisdomain={{nis_domain}} --nisserver={{nis_servers[0]}} --enablemkhomedir --update
+  changed_when: False
+  when: ansible_pkg_mgr=='yum'
+
+- name: Updating /etc/yp.conf for multiple NIS servers
+  template:
+    src: yp.conf.j2
+    dest: /etc/yp.conf
+
+- name: Updating /etc/nsswitch.conf
+  template:
+    src: 'nsswitch.conf.{{ ansible_pkg_mgr }}.j2'
+    dest: /etc/nsswitch.conf
+
+- name: Starting and enabling NIS services
+  service:
+    name: '{{ item }}'
+    state: started
+    enabled: yes
+  with_items:
+    - '{{ services }}'

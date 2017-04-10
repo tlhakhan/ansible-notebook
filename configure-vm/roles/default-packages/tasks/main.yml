@@ -1,4 +1,7 @@
 ---
+- name: Loading OS specific variables
+  include_vars: '{{ ansible_pkg_mgr }}.yml'
+
 - name: Installing packages
   yum:
     name: '{{ item }}'
@@ -6,3 +9,4 @@
   with_items:
     - '{{ helper_pkgs }}'
     - '{{ perf_pkgs }}'
+  when: ansible_pkg_mgr=='yum'

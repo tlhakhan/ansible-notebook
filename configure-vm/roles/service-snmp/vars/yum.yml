@@ -1,0 +1,7 @@
+---
+
+service_name: snmpd.service
+
+pkgs:
+  - net-snmp-libs
+  - net-snmp

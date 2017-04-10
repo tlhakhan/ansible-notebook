@@ -1,0 +1,30 @@
+---
+- name: Loading OS specific variables
+  include_vars: '{{ ansible_pkg_mgr }}.yml'
+
+- name: Installing service packages
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - '{{ pkgs }}'
+  when: ansible_pkg_mgr=='yum'
+
+- name: Installing service packages
+  apt:
+    pkg: '{{ item }}'
+    state: installed
+  with_items:
+    - '{{ pkgs }}'
+  when: ansible_pkg_mgr=='apt'
+
+- name: Updating /etc/snmp/snmpd.conf
+  template:
+    src: snmpd.conf.j2
+    dest: /etc/snmp/snmpd.conf
+
+- name: Starting and enabling snmpd
+  service:
+    name: '{{ service_name }}'
+    state: started
+    enabled: yes

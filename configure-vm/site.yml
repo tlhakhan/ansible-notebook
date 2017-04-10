@@ -1,9 +1,13 @@
 ---
 - hosts: all
   roles:
-    - default-config
+    - default-packages
     - service-ssh
     - service-dns
     - service-chrony
     - service-selinux
-  #  - service-reboot
+    - service-rsyslog
+  # - service-nis
+    - service-snmp
+    - service-repos
+  # - service-reboot

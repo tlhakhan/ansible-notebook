@@ -1,25 +1,39 @@
 ---
 - name: Importing OS specific variables
-  include_vars: '{{ ansible_os_family }}.yml'
+  include_vars: '{{ ansible_pkg_mgr }}.yml'
 
-- name: Installing chrony NTP client
+- name: Installing service packages
   yum:
-    name: 'chrony'
+    name: '{{ item }}'
     state: installed
-  when: ansible_os_family=='RedHat'
+  with_items:
+    - '{{ pkgs }}'
+  when: ansible_pkg_mgr=='yum'
+
+- name: Installing service packages
+  apt:
+    pkg: '{{ item }}'
+    state: installed
+  with_items:
+    - '{{ pkgs }}'
+  when: ansible_pkg_mgr=='apt'
 
 - name: Sending chrony.conf file
   template:
-    src: chrony.conf.RedHat.j2
+    src: 'chrony.conf.{{ ansible_pkg_mgr }}.j2'
     dest: /etc/chrony.conf
-    owner: root
-    group: root
-    mode: 644
-  when: ansible_os_family=='RedHat'
+  when: ansible_pkg_mgr=='yum'
 
-- name: Starting and enabling chrony NTP client
+
+- name: Sending chrony.conf file
+  template:
+    src: 'chrony.conf.{{ ansible_pkg_mgr }}.j2'
+    dest: /etc/chrony/chrony.conf
+  when: ansible_pkg_mgr=='apt'
+
+- name: Starting and enabling chrony client
   service:
-    name: '{{ chrony_service_name }}'
+    name: '{{ service_name }}'
     state: started
     enabled: yes
 

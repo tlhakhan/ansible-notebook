@@ -1,0 +1,7 @@
+---
+services:
+  - ypbind
+  - rpcbind
+pkgs:
+  - ypbind
+  - rpcbind

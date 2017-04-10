@@ -6,3 +6,17 @@
     key: "{{ lookup('file', item) }}"
   with_fileglob:
     - public_keys/*
+
+- name: Updating /etc/ssh/sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: '{{ item }}'
+  with_items:
+    - AddressFamily inet
+    - ListenAddress 0.0.0.0
+
+- name: Permitting root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin yes'

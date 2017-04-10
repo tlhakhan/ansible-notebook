@@ -1,0 +1,5 @@
+---
+snmp_community: public
+snmp_trapsink: 127.0.0.1
+snmp_syscontact: System Administrator
+snmp_syslocation: Planet Earth

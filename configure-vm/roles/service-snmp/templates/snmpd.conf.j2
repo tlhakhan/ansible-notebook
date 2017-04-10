@@ -1,0 +1,10 @@
+rocommunity {{ snmp_community }} 0.0.0.0/0
+
+trapcommunity {{ snmp_community }}
+trapsink {{snmp_trapsink}} {{ snmp_community }}
+
+syscontact {{ snmp_syscontact}}
+syslocation {{ snmp_syslocation}}
+
+dontLogTCPWrappersConnects yes
+skipNFSInHostResources true

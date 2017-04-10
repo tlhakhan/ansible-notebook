@@ -1,0 +1,10 @@
+---
+- name: Adding EPEL repository
+  yum_repository:
+    name: '{{ item.name }}'
+    description: '{{ item.description }}'
+    baseurl: '{{ item.baseurl }}'
+    gpgcheck: no
+  with_items:
+    - '{{ yum_repos }}'
+  when: ansible_pkg_mgr=='yum'

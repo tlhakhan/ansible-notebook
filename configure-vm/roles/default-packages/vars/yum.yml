@@ -4,9 +4,11 @@ helper_pkgs:
     - libselinux-python
 
 perf_pkgs:
+    - iftop
     - dstat
-    - bind-utils   
+    - bind-utils
     - httpd-tools
     - sysstat
     - tuned
+    - hwloc
     - hwloc-gui
