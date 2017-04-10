@@ -1,0 +1,31 @@
+---
+- name: Updating /etc/sysconfig/network
+  template:
+    src: network.j2
+    dest: /etc/sysconfig/network
+  when: ansible_pkg_mgr=='yum'
+
+- name: Adding sysctl.conf 90-disable-ipv6.conf
+  template:
+    src: 90-disable-ipv6.conf.j2
+    dest: /etc/sysctl.d/90-disable-ipv6.conf
+
+- name: Adding sysctl.conf 91-vm-swap.conf
+  template:
+    src: 91-vm-swap.conf.j2
+    dest: /etc/sysctl.d/91-vm-swap.conf
+
+- name: Cleaning up hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
+- name: Updating mail.rc file
+  template:
+    src: mail.rc.j2
+    dest: /etc/mail.rc
+
+- name: Updating vimrc file
+  template:
+    src: vimrc.j2
+    dest: /etc/vimrc

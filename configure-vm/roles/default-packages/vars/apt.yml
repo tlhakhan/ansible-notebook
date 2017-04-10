@@ -1,28 +1,30 @@
 ---
 helper_pkgs:
+    - open-vm-tools
     - tcsh
-    - rsync
-    - curl
-    - wget
     - tmux
     - git
     - vim-enhanced
     - nscd
     - bc
-    - libselinux-python
-    - redhat-lsb-core
+    - curl
+    - wget
+    - rsync
+    - sendmail
+    - mailutils
 
 lang_pkgs:
   - nodejs
   - golang
+  - python
+  - python-dev
 
 perf_pkgs:
     - iftop
     - iotop
     - dstat
-    - bind-utils
-    - httpd-tools
+    - apache2-utils
+    - psmisc
+    - procinfo
     - sysstat
-    - tuned
-    - hwloc
-    - hwloc-gui
+    - bind9-host
