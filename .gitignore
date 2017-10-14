@@ -1,5 +1,4 @@
 *.retry
-hosts
 *.key
 *.rpm
 *.log
