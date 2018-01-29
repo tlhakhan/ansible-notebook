@@ -3,8 +3,8 @@
 BASEDIR=$(dirname $BASH_SOURCE)
 
 # mysql catalog
-MYSQL_VERSIONS=( 5.6.35 5.7.17 )
-MYSQL_VERSION_URLS=( "https://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-5.6.35-1.el7.x86_64.rpm-bundle.tar" "https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.17-1.el7.x86_64.rpm-bundle.tar" )
+MYSQL_VERSIONS=( 5.6.39 5.7.21 )
+MYSQL_VERSION_URLS=( "https://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-5.6.39-1.el7.x86_64.rpm-bundle.tar" "https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-1.el7.x86_64.rpm-bundle.tar" )
 
 # get rpm bundle
 for i in ${!MYSQL_VERSIONS[@]}
